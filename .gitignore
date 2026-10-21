@@ -1,0 +1,25 @@
+# --- Dataset N-CMAPSS: 28 GB, público, se descarga desde NASA (ver README) ---
+Dataset/*.h5
+
+# --- Caché del dataset submuestreado: los notebooks la regeneran desde el .h5 ---
+Project/*/results/cache_step*.npz
+Project/*/results/cache_step*_vars.json
+
+# --- Copia de las corridas de V02: la etapa 0 de V03 la regenera ---
+Project/ProjectV03/results/runs/
+
+# --- Pruebas rápidas y archivos temporales ---
+Project/*/results/*_smoke/
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
+
+# --- Artículos con derechos de autor (consultar por su DOI) ---
+Documentos/
+
+# --- Archivos del sistema ---
+Thumbs.db
+desktop.ini
+CLAUDE.md
+README.md
+Reuniones/

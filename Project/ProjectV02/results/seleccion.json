@@ -1,0 +1,88 @@
+{
+  "criterios": {
+    "etapa_1_arquitectura": "Entre las arquitecturas con atención (A4, A5, A6), la de menor mediana de 'RMSE final' (RUL <= 20) en validación sobre 5 semillas. A3 se mantiene como referencia sin atención.",
+    "etapa_2_normalizacion": "Entre {global, regimen (N1a), motor (N1b)}, se adopta la de menor mediana de 'RMSE final' en validación para la arquitectura elegida en la etapa 1. Si ninguna normalización nueva mejora a la global, se mantiene la global.",
+    "etapa_3_alpha": "Valor de alfa que minimiza la mediana de 'Score NASA final' en validación.",
+    "etapa_4_validacion_cruzada": "Sin selección: evaluación de la configuración final contra A3 (global, MSE), reportando cada unidad por separado.",
+    "reporte": "Mediana [mín. - máx.] sobre semillas; sin media ± desviación estándar ni pruebas de significancia (Reunión 03).",
+    "zona_final": "RUL <= 20 ciclos"
+  },
+  "decisiones": {
+    "etapa_1": {
+      "arquitectura_elegida": "A6",
+      "nombre": "CNN + atención",
+      "mediana_rmse_final_val": 2.0039,
+      "mediana_rmse_final_val_A3": 2.5993,
+      "rango_solapado_con_A3": true,
+      "semillas_mejor_que_A3": 4
+    },
+    "etapa_2": {
+      "normalizacion_elegida": "global",
+      "arquitectura": "A6",
+      "mediana_rmse_final_val": {
+        "global": 2.0039,
+        "regimen": 2.0231,
+        "motor": 3.288
+      },
+      "regimenes_K": 2
+    },
+    "etapa_3": {
+      "alpha_elegido": 2.0,
+      "arquitectura": "A6",
+      "normalizacion": "global",
+      "mediana_score_nasa_final_val": {
+        "1": 0.1756,
+        "2": 0.139,
+        "4": 0.1687
+      }
+    },
+    "etapa_4": {
+      "validacion_cruzada_rmse_final_mediana_por_unidad": {
+        "2": {
+          "final": 2.0191,
+          "base": 1.5501
+        },
+        "5": {
+          "final": 5.5985,
+          "base": 2.992
+        },
+        "10": {
+          "final": 2.7792,
+          "base": 2.2882
+        },
+        "16": {
+          "final": 1.8688,
+          "base": 3.3119
+        },
+        "18": {
+          "final": 2.013,
+          "base": 1.8451
+        },
+        "20": {
+          "final": 1.8865,
+          "base": 3.2957
+        }
+      },
+      "prueba_oficial_mediana": {
+        "base": {
+          "RMSE final": 2.9742,
+          "Score NASA final": 0.2942,
+          "Sobreest. media final": 2.3473,
+          "RMSE": 6.0149
+        },
+        "final_mse": {
+          "RMSE final": 2.1583,
+          "Score NASA final": 0.1886,
+          "Sobreest. media final": 1.6035,
+          "RMSE": 5.2769
+        },
+        "final": {
+          "RMSE final": 1.7793,
+          "Score NASA final": 0.1398,
+          "Sobreest. media final": 1.0012,
+          "RMSE": 5.3448
+        }
+      }
+    }
+  }
+}
