@@ -1,0 +1,36 @@
+{
+  "criterios": {
+    "punto_de_partida": "Configuración final de v03: A6 (CNN + atención), normalización global, pérdida asimétrica con alfa = 2. Elegida en v02 y v03 con los criterios registrados en ProjectV03/results/seleccion.json.",
+    "etapa_1_pooling": "Con alfa = 2: entre A6-P1 y A6-P2 se toma la de menor mediana de 'RMSE final' (RUL <= 20) en validación sobre 5 semillas. Reemplaza a A6 sin pooling solo si (a) su mediana de 'RMSE final' es menor que la de A6 y (b) es mejor que A6 en al menos 4 de las 5 semillas, comparando semilla con semilla. Los resultados con alfa = 1 se informan pero no deciden.",
+    "etapa_2_validacion_cruzada_y_prueba": "Solo si la etapa 1 adopta el pooling. Sin selección: validación cruzada dejando un motor fuera contra la configuración final de v03 y la base A3, y una única evaluación en el conjunto de prueba oficial, declarada como segunda evaluación del conjunto de prueba en el trabajo.",
+    "etapa_3_regimenes": "Análisis sin selección del modelo. El error por régimen usa el agrupamiento de mayor silueta, como en v03.",
+    "entrenamiento": "Early stopping con paciencia 5 y máximo 30 épocas; se conserva la época con menor criterio de validación. Curvas en un eje común de 1 a 30 épocas.",
+    "reporte": "Mediana [mín. - máx.] sobre semillas; sin media ± desviación estándar ni pruebas de significancia (Reunión 03).",
+    "zona_final": "RUL <= 20 ciclos"
+  },
+  "decisiones": {
+    "heredada_v03": {
+      "arch": "A6",
+      "norm": "global",
+      "alpha": 2.0,
+      "base": "A3"
+    },
+    "etapa_1": {
+      "variante_candidata": "A6P2",
+      "mediana_rmse_final_val": {
+        "A6": 1.831,
+        "A6P1": 2.0271,
+        "A6P2": 2.0262
+      },
+      "mediana_menor_que_A6": false,
+      "semillas_mejor_que_A6": 2,
+      "pooling_adoptado": false,
+      "arquitectura_vigente": "A6",
+      "observacion_posterior_A6P2_mse": {
+        "mediana_rmse_final_val": 1.7055,
+        "semillas_mejor_que_final_v03": 3,
+        "nota": "Comparación no prevista en la regla; no cambia la decisión."
+      }
+    }
+  }
+}

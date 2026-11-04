@@ -7,6 +7,9 @@ Project/*/results/cache_step*_vars.json
 
 # --- Copia de las corridas de V02: la etapa 0 de V03 la regenera ---
 Project/ProjectV03/results/runs/
+# En V04 se excluyen solo las copias de V02 (A1_ ... A6_); las corridas nuevas con
+# pooling (A6P1_, A6P2_) sí se suben
+Project/ProjectV04/results/runs/A[1-6]_*/
 
 # --- Pruebas rápidas y archivos temporales ---
 Project/*/results/*_smoke/
@@ -21,5 +24,4 @@ Documentos/
 Thumbs.db
 desktop.ini
 CLAUDE.md
-README.md
 Reuniones/
