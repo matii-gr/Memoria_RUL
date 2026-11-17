@@ -14,33 +14,41 @@ una pérdida asimétrica que penaliza la sobreestimación.
 Error en la zona final (RUL ≤ 20 ciclos) sobre los motores de prueba oficiales (11, 14 y 15),
 mediana [mínimo – máximo] sobre 5 semillas:
 
-| Configuración | RMSE final (ciclos) | Sesgo (ciclos) |
-|---|---|---|
-| Base: CNN + LSTM, error cuadrático medio | 2,97 [2,47 – 3,30] | +3,00 |
-| CNN + atención, error cuadrático medio | 2,16 [1,92 – 2,45] | +1,24 |
-| **CNN + atención, pérdida asimétrica (α = 2)** | **1,78** [1,50 – 1,97] | **+0,19** |
+| Configuración | RMSE final (ciclos) | Ventanas sobreestimadas, zona final | Sesgo global (ciclos) |
+|---|---|---|---|
+| Base: CNN + LSTM, error cuadrático medio | 2,97 [2,47 – 3,30] | 86 % | +3,00 |
+| CNN + atención, error cuadrático medio | 2,16 [1,92 – 2,45] | 82 % | +1,24 |
+| **CNN + atención, pérdida asimétrica (α = 2)** | **1,78** [1,50 – 1,97] | **67 %** | **+0,19** |
+
+El sesgo global se calcula sobre todas las ventanas de prueba, no solo sobre la zona final.
+ProjectV05 muestra por qué no representa la zona final: lo domina la zona de RUL alto, que se
+subestima por el recorte del RUL en 62 ciclos.
 
 En la validación cruzada dejando un motor fuera, la ventaja de la configuración final no es
 uniforme: depende de si el modelo base tiende a sobreestimar o a subestimar cada motor. El
 detalle está en `Project/ProjectV03/RULv03.ipynb`. ProjectV04 probó agregar *pooling* a la
-red y no cambió la configuración final.
+red y no cambió la configuración final. ProjectV05 analiza el sesgo y el score NASA sin
+entrenar modelos nuevos.
 
 ## Dónde empezar
 
-La versión vigente es **ProjectV04**, que responde a la Reunión 05: por qué la red no tiene
-una capa de *pooling* y una revisión del agrupamiento de regímenes de operación. Los
-experimentos principales (ablación de arquitecturas, pérdida asimétrica, validación cruzada
-y prueba) están en **ProjectV03**, y V04 parte de su configuración final.
+La versión vigente es **ProjectV05**, que responde a la Reunión 06: qué es el sesgo global
+y cuánto se sobreestima o subestima, por qué el score NASA es tan bajo, por qué se usó el
+sesgo global en V04 (con la corrección de esa explicación) y el orden real de las capas.
+Es una versión de análisis: no entrena modelos nuevos. Los experimentos principales
+(ablación de arquitecturas, pérdida asimétrica, validación cruzada y prueba) están en
+**ProjectV03**, y el estudio del *pooling* y del agrupamiento de regímenes, en **ProjectV04**.
 
 | Archivo | Contenido |
 |---|---|
-| `Project/ProjectV04/RULv04.ipynb` | Notebook de V04, comentado y ejecutado: pooling y regímenes de operación |
-| `Project/ProjectV03/RULv03.ipynb` | Notebook de V03, comentado y ejecutado: ablación, pérdida asimétrica, validación cruzada y prueba |
-| `Project/ProjectV04/Plan_ProjectV04.md` | Plan por etapas de V04, decisiones y estado |
-| `Project/ProjectV04/Diagramas.md` | Diagramas del pipeline, de A6 con y sin pooling y del análisis de regímenes (Mermaid) |
-| `Project/ProjectV04/Guia_Estudio.md` | Explicación del código y de la teoría |
-| `Project/ProjectV04/Metodologia_IA.md` | Metodología de uso de inteligencia artificial |
-| `Project/ProjectV04/Preparacion_Defensa.md` | Preguntas probables, limitaciones y pendientes |
+| `Project/ProjectV05/RULv05.ipynb` | Notebook de V05, comentado y ejecutado: sesgo, score NASA y correcciones de V04 |
+| `Project/ProjectV04/RULv04.ipynb` | Notebook de V04: pooling y regímenes de operación |
+| `Project/ProjectV03/RULv03.ipynb` | Notebook de V03: ablación, pérdida asimétrica, validación cruzada y prueba |
+| `Project/ProjectV05/Plan_ProjectV05.md` | Plan por etapas de V05, decisiones y estado |
+| `Project/ProjectV05/Diagramas.md` | Diagramas del pipeline, de A6, del orden de las capas, del sesgo y del score (Mermaid) |
+| `Project/ProjectV05/Guia_Estudio.md` | Explicación del código y de la teoría |
+| `Project/ProjectV05/Metodologia_IA.md` | Metodología de uso de inteligencia artificial |
+| `Project/ProjectV05/Preparacion_Defensa.md` | Preguntas probables, limitaciones y pendientes |
 
 Las figuras de cada etapa están en la carpeta `results/` de cada versión.
 
@@ -53,7 +61,8 @@ Las figuras de cada etapa están en la carpeta `results/` de cada versión.
 | `Project/ProjectV01` | Ablación corregida: partición por motor y early stopping |
 | `Project/ProjectV02` | Estudio por etapas: arquitecturas, normalización, pérdida y validación cruzada |
 | `Project/ProjectV03` | Mismos experimentos que V02, código comentado, análisis de regímenes de operación y documentación |
-| `Project/ProjectV04` | Versión vigente: capa de pooling y revisión del agrupamiento de regímenes |
+| `Project/ProjectV04` | Capa de pooling y revisión del agrupamiento de regímenes |
+| `Project/ProjectV05` | Versión vigente: análisis del sesgo y del score NASA, y correcciones de V04 |
 
 Cada versión se conserva sin modificar; los cambios pedidos en cada reunión se implementan
 en una versión nueva.
@@ -92,9 +101,10 @@ volver a correrlos. Para re-ejecutarlos:
 **Resultados guardados.** `Project/ProjectV02/results/runs/` contiene las 96 corridas de
 entrenamiento de V02 (pesos, historial y predicciones). Al re-ejecutar, los notebooks las
 cargan desde disco en vez de reentrenar, lo que reduce el tiempo de más de 2 horas a unos
-minutos. ProjectV03 y ProjectV04 copian esas corridas al ejecutarse y verifican,
-reentrenando algunas desde cero, que su código las reproduce exactamente. Las 20 corridas
-nuevas de V04 (A6 con pooling) están en `Project/ProjectV04/results/runs/`.
+minutos. ProjectV03, ProjectV04 y ProjectV05 copian esas corridas al ejecutarse y
+verifican, reentrenando algunas desde cero, que su código las reproduce exactamente. Las 20
+corridas nuevas de V04 (A6 con pooling) están en `Project/ProjectV04/results/runs/`, y
+ProjectV05 también las copia y verifica.
 
 La primera ejecución lee el archivo `.h5` y genera una caché del dataset submuestreado en
 `results/` (unos 2 minutos).
@@ -102,11 +112,12 @@ La primera ejecución lee el archivo `.h5` y genera una caché del dataset submu
 ## Archivos no incluidos
 
 Además del dataset, no se incluyen las cachés regenerables, las copias de las corridas de V02
-en ProjectV03 y ProjectV04 (se regeneran desde ProjectV02), los informes y artículos de la
+en ProjectV03, ProjectV04 y ProjectV05, ni las de V04 en ProjectV05 (se regeneran desde las
+versiones originales), los informes y artículos de la
 carpeta `Documentos/` ni los resúmenes de reuniones. El detalle está en `.gitignore`.
 
 ## Uso de inteligencia artificial
 
 El código y la experimentación se desarrollaron con apoyo de Claude Code (Anthropic). La
 metodología, las salvaguardas adoptadas y los errores de la herramienta detectados durante el
-trabajo están descritos en `Project/ProjectV04/Metodologia_IA.md`.
+trabajo están descritos en `Project/ProjectV05/Metodologia_IA.md`.

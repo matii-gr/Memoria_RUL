@@ -1,0 +1,25 @@
+{
+  "criterios": {
+    "punto_de_partida": "Configuración final de v04, igual a la de v03: A6 (CNN + atención), normalización global, pérdida asimétrica con alfa = 2. El pooling no se adoptó (ProjectV04/results/seleccion.json, etapa 1).",
+    "v05_sin_seleccion": "Versión de análisis: no se elige ni se cambia ningún modelo. No hay corridas nuevas salvo las dos de verificación de la etapa 0, que deben coincidir exactamente con las reutilizadas.",
+    "conjunto_de_prueba": "No se calcula ninguna métrica sobre el conjunto de prueba oficial. Sus predicciones solo se comparan número a número en la verificación.",
+    "analisis": "Etapas 1 a 3 sobre las predicciones de validación (motores 18 y 20) de: base A3 con MSE, A6 con MSE, A6 con alfa = 2 (final), y A6-P1 y A6-P2 con alfa = 1 y 2.",
+    "entrenamiento": "Igual que en v02 a v04: early stopping con paciencia 5 y máximo 30 épocas; se conserva la época con menor criterio de validación.",
+    "reporte": "Mediana [mín. - máx.] sobre semillas; sin media ± desviación estándar ni pruebas de significancia (Reunión 03).",
+    "zona_final": "RUL <= 20 ciclos"
+  },
+  "decisiones": {
+    "heredada_v04": {
+      "arch": "A6",
+      "norm": "global",
+      "alpha": 2.0,
+      "base": "A3",
+      "pooling": "no adoptado (v04, etapa 1)"
+    },
+    "correccion_v04_etapa_1": {
+      "afirmacion_v04": "A6-P2 baja las predicciones (sesgo global -1,32 con MSE y -1,83 con alfa = 2) y por eso mejora con MSE y empeora con alfa = 2.",
+      "correccion_v05": "En la zona final el sesgo de A6-P2 es -0,03 (MSE) y -0,62 (alfa = 2). El cambio de RMSE^2 final se explica tanto o más por la varianza del error que por el sesgo. A6-P1 no baja las predicciones con MSE.",
+      "decision_v04": "Sin cambios: el pooling no se adopta (regla pre-registrada sobre el RMSE final)."
+    }
+  }
+}

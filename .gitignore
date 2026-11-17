@@ -10,6 +10,8 @@ Project/ProjectV03/results/runs/
 # En V04 se excluyen solo las copias de V02 (A1_ ... A6_); las corridas nuevas con
 # pooling (A6P1_, A6P2_) sí se suben
 Project/ProjectV04/results/runs/A[1-6]_*/
+# En V05 todas las corridas son copias (de V02 y de V04): la etapa 0 las regenera
+Project/ProjectV05/results/runs/
 
 # --- Pruebas rápidas y archivos temporales ---
 Project/*/results/*_smoke/
@@ -25,3 +27,5 @@ Thumbs.db
 desktop.ini
 CLAUDE.md
 Reuniones/
+Memoria/
+Plantilla/
