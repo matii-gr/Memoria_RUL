@@ -1,0 +1,21 @@
+% Generado por RULv06.ipynb; no editar a mano
+\begin{tabular}{p{4.2cm}lp{5.4cm}}
+\toprule
+\textbf{Hiperparámetro} & \textbf{Valor} & \textbf{Comentario} \\
+\midrule
+Submuestreo & 1 de cada 10 registros & Un registro cada 10 s \\
+Largo de la ventana & 30 pasos & 5 minutos de vuelo \\
+Desplazamiento entre ventanas & 10 pasos & Ventanas consecutivas comparten 20 pasos \\
+Umbral del recorte PwL & 62 ciclos & Mediana del RUL en la transición \\
+Filtros de la primera convolución & 32 & Kernel 3, padding 1 \\
+Dimensión antes de la agregación & 64 & Canales de la 2.ª convolución o unidades de la LSTM \\
+Dropout & 0.2 & Uno por arquitectura \\
+Tamaño del lote & 256 & Ventanas por lote \\
+Optimizador & Adam & Tasa de aprendizaje 0.001 \\
+Regularización L2 & 0.0001 & weight decay de Adam \\
+Máximo de épocas & 30 & Con early stopping \\
+Paciencia & 5 épocas & Épocas sin mejorar en validación antes de detener \\
+Semillas & 5 & 0 a 4; cada configuración se entrena con todas \\
+Pérdida de la configuración final & $\alpha$ = 2 & Pérdida cuadrática asimétrica \\
+\bottomrule
+\end{tabular}

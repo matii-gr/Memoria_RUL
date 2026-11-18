@@ -12,6 +12,8 @@ Project/ProjectV03/results/runs/
 Project/ProjectV04/results/runs/A[1-6]_*/
 # En V05 todas las corridas son copias (de V02 y de V04): la etapa 0 las regenera
 Project/ProjectV05/results/runs/
+# En V06 tambien: todas las corridas son copias de V02 y V04
+Project/ProjectV06/results/runs/
 
 # --- Pruebas rápidas y archivos temporales ---
 Project/*/results/*_smoke/

@@ -1,0 +1,16 @@
+% Generado por RULv06.ipynb; no editar a mano
+\begin{tabular}{lrp{4.5cm}}
+\toprule
+\textbf{Medida} & \textbf{Valor} & \textbf{Comentario} \\
+\midrule
+Parámetros & 14\,497 &  \\
+Memoria de los pesos (float32) & 57 KiB & 4 bytes por parámetro \\
+Archivo de pesos (state.pt) & 63 KiB & Incluye las estadísticas de BatchNorm \\
+Inferencia, 1 ventana & 0.52 ms & Mediana; un motor en operación \\
+Inferencia, lote de 256 ventanas & 3.7 ms & 15 $\mu$s por ventana \\
+Validación completa & 0.45 s & 16\,251 ventanas \\
+Entrenamiento de una corrida & 52 s & Mediana de 5 semillas; 18 épocas \\
+Tiempo por época & 2.8 s & 35\,287 ventanas de entrenamiento \\
+Equipo & CPU, 12 núcleos lógicos & PyTorch 2.7.1, 6 hilos \\
+\bottomrule
+\end{tabular}

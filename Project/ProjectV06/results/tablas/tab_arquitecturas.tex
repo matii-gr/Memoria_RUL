@@ -1,0 +1,15 @@
+% Generado por RULv06.ipynb; no editar a mano
+\begin{tabular}{lp{2.5cm}p{1.8cm}lrp{2.7cm}}
+\toprule
+\textbf{Id} & \textbf{Arquitectura} & \textbf{Agregación} & \textbf{\shortstack[l]{Forma antes\\{}de agregar}} & \textbf{Parámetros} & \textbf{Inspirada en} \\
+\midrule
+A1 & 1D-CNN & Promedio temporal & (B, 30, 64) & 10.273 & Sateesh Babu et al. (2016); Li, Ding y Sun (2018) \\
+A2 & LSTM & Último estado & (B, 30, 64) & 23.617 & Zheng et al. (2017); Wu et al. (2018) \\
+A3 & CNN + LSTM & Último estado & (B, 30, 64) & 29.025 & — \\
+A4 & LSTM + atención & Atención & (B, 30, 64) & 27.841 & de Oliveira da Costa et al. (2019) \\
+A5 & CNN + LSTM + atención & Atención & (B, 30, 64) & 33.249 & Li et al. (2022) \\
+A6 & CNN + atención & Atención & (B, 30, 64) & 14.497 & — \\
+A6-P1 & CNN + atención, pooling tras la 1.ª conv. & Atención & (B, 15, 64) & 14.497 & — \\
+A6-P2 & CNN + atención, pooling tras cada conv. & Atención & (B, 7, 64) & 14.497 & — \\
+\bottomrule
+\end{tabular}

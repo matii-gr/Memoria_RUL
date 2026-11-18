@@ -1,0 +1,27 @@
+{
+  "criterios": {
+    "punto_de_partida": "Configuración final de v03, v04 y v05: A6 (CNN + atención), normalización global, pérdida asimétrica con alfa = 2. Criterios y decisiones originales en ProjectV02/results/seleccion.json a ProjectV05/results/seleccion.json.",
+    "v06_sin_seleccion": "Notebook consolidado: no se elige ni se cambia ningún modelo. No hay corridas nuevas salvo las dos de verificación de la etapa 0, que deben coincidir exactamente con las reutilizadas.",
+    "conjunto_de_prueba": "Evaluado una sola vez, en v02. En v06 sus predicciones guardadas se usan para presentar ese resultado y para calcular, de forma descriptiva y declarada, el sesgo de la zona final en prueba (decisión del estudiante, 2026-11-17). Ninguna decisión depende de esa métrica.",
+    "entrenamiento": "Igual que en v02 a v05: early stopping con paciencia 5 y máximo 30 épocas; se conserva la época con menor criterio de validación.",
+    "reporte": "Mediana [mín. - máx.] sobre semillas; sin media ± desviación estándar ni pruebas de significancia (Reunión 03).",
+    "zona_final": "RUL <= 20 ciclos"
+  },
+  "decisiones": {
+    "configuracion_final": {
+      "arch": "A6",
+      "norm": "global",
+      "alpha": 2.0,
+      "base": "A3",
+      "pooling": "no adoptado (v04, etapa 1)"
+    },
+    "sesgo_final_prueba_v06": {
+      "nota": "Métrica descriptiva calculada en v06 desde predicciones guardadas; no interviene en decisiones.",
+      "mediana_por_configuracion": {
+        "Base (A3, MSE)": 2.2395,
+        "A6, MSE": 1.4977,
+        "Final (A6, α = 2)": 0.719
+      }
+    }
+  }
+}
